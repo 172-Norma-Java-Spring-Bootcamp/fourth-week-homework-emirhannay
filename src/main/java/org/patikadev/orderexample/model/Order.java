@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -16,8 +17,9 @@ public class Order extends BaseExtendedModel{
             private OrderStatus orderStatus;
             @OneToOne
             private Customer customer;
-            @OneToOne(cascade = CascadeType.MERGE)
+            @OneToOne(cascade = CascadeType.REMOVE)
             private Basket basket;
             @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
             private OrderAddress orderAddress;
+            private Date orderTime;
 }

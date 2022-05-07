@@ -52,7 +52,7 @@ public class ProductServiceImpl implements  ProductService{
 
     @Override
     public Collection<GetProductsResponseDTO> getProducts() {
-        Collection<GetProductsResponseDTO> productList = productRepository.getProducts().orElseThrow(
+        Collection<GetProductsResponseDTO> productList = productRepository.getProductsByDeleteStatus().orElseThrow(
                 () -> new BusinessServiceOperationException.ProductNotFoundException("Products not found")
         )
                 .stream()

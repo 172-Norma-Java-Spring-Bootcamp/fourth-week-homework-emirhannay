@@ -41,6 +41,7 @@ public class OrderConverterImpl implements OrderConverter {
         order.setDeleted(false);
         order.setCreatedAt(new Date());
         order.setCreatedBy(customer.getName());
+        order.setOrderTime(new Date());
 
 
         return order;
