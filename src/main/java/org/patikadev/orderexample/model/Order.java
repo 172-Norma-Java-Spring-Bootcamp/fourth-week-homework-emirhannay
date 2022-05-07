@@ -15,7 +15,8 @@ public class Order extends BaseExtendedModel{
             private BigDecimal price;
             @Enumerated(EnumType.STRING)
             private OrderStatus orderStatus;
-            @OneToOne
+            @ManyToOne
+            @JoinColumn(name = "customer_id", nullable = false)
             private Customer customer;
             @OneToOne(cascade = CascadeType.REMOVE)
             private Basket basket;

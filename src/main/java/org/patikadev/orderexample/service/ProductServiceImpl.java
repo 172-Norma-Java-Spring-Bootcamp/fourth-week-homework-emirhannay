@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.patikadev.orderexample.converter.ProductConverter;
 import org.patikadev.orderexample.dto.request.CreateProductRequestDTO;
-import org.patikadev.orderexample.dto.request.DefineProductToCampaingRequestDTO;
+import org.patikadev.orderexample.dto.request.DefineProductToCampaignRequestDTO;
 import org.patikadev.orderexample.dto.response.GetProductsResponseDTO;
 import org.patikadev.orderexample.exception.BaseException;
 import org.patikadev.orderexample.exception.BusinessServiceOperationException;
@@ -40,7 +40,7 @@ public class ProductServiceImpl implements  ProductService{
     }
 
     @Override
-    public void defineProductToCampaign(DefineProductToCampaingRequestDTO defineProductToCampaingRequestDTO) {
+    public void defineProductToCampaign(DefineProductToCampaignRequestDTO defineProductToCampaingRequestDTO) {
         Product product = getProduct(defineProductToCampaingRequestDTO.productId());
         Campaign campaign = campaignService.getCampaign(defineProductToCampaingRequestDTO.campaignId());
         //Add campaign to product

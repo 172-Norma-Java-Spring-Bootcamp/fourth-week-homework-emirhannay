@@ -8,6 +8,6 @@ import java.util.Collection;
 import java.util.Optional;
 
 public interface ProductRepository extends JpaRepository<Product,Long> {
-        @Query(value = "select * from seller s where s.is_deleted= false ", nativeQuery = true)
+        @Query(value = "select * from product p where p.is_deleted= false ", nativeQuery = true)
         Optional<Collection<Product>> getProductsByDeleteStatus();
 }

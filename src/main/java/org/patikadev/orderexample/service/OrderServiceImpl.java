@@ -36,12 +36,12 @@ public class OrderServiceImpl implements OrderService{
         );
         log.info("Getting order was successfully -> {}",order.getId());
         return order;
+
     }
 
     @Override
     public Order getOrderByBasketId(Long basketId) {
         Order order = orderRepository.findByBasketId(basketId);
-        log.info("Getting order was successfully -> {}",order.getId());
         return order;
     }
 

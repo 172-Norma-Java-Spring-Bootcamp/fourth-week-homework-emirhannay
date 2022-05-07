@@ -22,6 +22,7 @@ public class ProductConverterImpl implements ProductConverter{
     private final BrandService brandService;
     private final CategoryService categoryService;
     private final SellerService sellerService;
+    private final CategoryConverter categoryConverter;
     @Override
     public Product toProduct(CreateProductRequestDTO createProductRequestDTO) {
        Product product = new Product();
@@ -43,12 +44,15 @@ public class ProductConverterImpl implements ProductConverter{
 
     }
     public GetProductsResponseDTO toGetProductsResponse(Product product) {
-        return new GetProductsResponseDTO(product.getName(),
-                product.getImage(),
+        return new GetProductsResponseDTO(product.getId(),
+                product.getName(),
+                product.getStock(),
+                product.getBarcode(),
                 product.getPrice(),
-                product.getCategory(),
+                categoryConverter.categoryToCategoryResponseDTO(product.getCategory()),
                 product.getSeller(),
                 product.getBrand(),
-                product.getStock());
+                product.getImage()
+                );
     }
 }

@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements  CategoryService{
         Category category = categoryRepository.findById(id).orElseThrow(
                 () -> new BusinessServiceOperationException.CategoryNotFoundException("Category not found"));
         log.info("Getting category was successfully -> {}",category.getId());
-        return categoryConverter.CategoryToCreateCategoryRequestDTO(category);
+        return categoryConverter.categoryToCreateCategoryRequestDTO(category);
     }
 
     @Override

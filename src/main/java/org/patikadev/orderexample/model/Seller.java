@@ -1,5 +1,6 @@
 package org.patikadev.orderexample.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +20,7 @@ public class Seller extends BaseExtendedModel{
     private String username;
     private String password;
     @OneToOne(mappedBy = "seller",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-
+    @JsonIgnore
     private SellerAddress sellerAddress;
     private BigDecimal shippingCost;
 }

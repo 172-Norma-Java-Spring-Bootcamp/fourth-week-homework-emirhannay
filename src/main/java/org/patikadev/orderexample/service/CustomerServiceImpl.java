@@ -64,14 +64,17 @@ public class CustomerServiceImpl implements CustomerService {
         Customer customer = customerRepository
                 .findById(id)
                 .orElseThrow(() -> new BusinessServiceOperationException.CustomerNotFoundException("Customer not found"));
-        if (customer.isDeleted()) {
-            throw new BusinessServiceOperationException.CustomerAlreadyDeletedException("Customer already deleted");
-        }
         if (hardDelete) {
             customerRepository.delete(customer);
             log.info("Hard delete customer was successfully -> {}",customer.getId());
             return;
         }
+        if (customer.isDeleted()) {
+
+            throw new BusinessServiceOperationException.CustomerAlreadyDeletedException("Customer already deleted");
+        }
+
+
         customer.setDeleted(true);
         customerRepository.save(customer);
         log.info("Delete customer was successfully -> {}",customer.getId());

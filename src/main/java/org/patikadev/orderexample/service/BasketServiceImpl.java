@@ -87,7 +87,7 @@ public class BasketServiceImpl implements BasketService{
                     add(basketItemService.calculateBasketItemTotalPrice(basketItem)));
             basket.setDiscountPrice(basket.getDiscountPrice().add(basketItemService.calculateBasketItemDiscountPrice(basketItem)));
             basketRepository.save(basket);
-            log.info("Basket created successfully -> {}",basket.getId());
+
             log.info("BasketItem {} added to basket {} successfully", basketItem.getId(), basket.getId());
         }
 

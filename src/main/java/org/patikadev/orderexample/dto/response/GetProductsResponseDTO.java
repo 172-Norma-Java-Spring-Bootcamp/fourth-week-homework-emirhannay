@@ -5,7 +5,8 @@ import org.patikadev.orderexample.model.Category;
 import org.patikadev.orderexample.model.Seller;
 
 import java.math.BigDecimal;
+import java.util.UUID;
 
-public record GetProductsResponseDTO(String name, String image, BigDecimal price, Category category, Seller seller,
-                                     Brand brand, int stock) {
+public record GetProductsResponseDTO(Long id, String name, int stock, UUID barcode, BigDecimal price, CategoryResponseDTO categoryResponseDTO, Seller seller,
+                                     Brand brand,String image ) {
 }

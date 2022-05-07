@@ -14,5 +14,6 @@ public interface OrderRepository extends JpaRepository<Order,Long> {
 
 
     Order findByBasketId(Long basketId);
+
     Optional<Order> findByCustomerId(Long customerId);
 }
