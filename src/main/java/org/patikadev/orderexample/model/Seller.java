@@ -20,7 +20,6 @@ public class Seller extends BaseExtendedModel{
     private String username;
     private String password;
     @OneToOne(mappedBy = "seller",cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JsonIgnore
     private SellerAddress sellerAddress;
     private BigDecimal shippingCost;
 }

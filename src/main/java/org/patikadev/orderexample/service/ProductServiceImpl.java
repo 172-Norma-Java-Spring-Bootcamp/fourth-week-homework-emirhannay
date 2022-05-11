@@ -31,17 +31,24 @@ public class ProductServiceImpl implements  ProductService{
         log.info("Product created was successfully -> {}",product.getId());
     }
 
-    public Product getProduct(Long id){
+    public Product getProductEntityWithId(Long id){
         Product product = productRepository.findById(id).orElseThrow(
                 () -> new BusinessServiceOperationException.ProductNotFoundException("Product not found")
         );
         log.info("Getting product was successfully -> {}",product.getId());
         return product;
     }
+    public GetProductsResponseDTO getProductWithId(Long id){
+        Product product = productRepository.findById(id).orElseThrow(
+                () -> new BusinessServiceOperationException.ProductNotFoundException("Product not found")
+        );
+        log.info("Getting product was successfully -> {}",product.getId());
+        return productConverter.toGetProductsResponse(product);
+    }
 
     @Override
     public void defineProductToCampaign(DefineProductToCampaignRequestDTO defineProductToCampaingRequestDTO) {
-        Product product = getProduct(defineProductToCampaingRequestDTO.productId());
+        Product product = getProductEntityWithId(defineProductToCampaingRequestDTO.productId());
         Campaign campaign = campaignService.getCampaign(defineProductToCampaingRequestDTO.campaignId());
         //Add campaign to product
         product.getCampaigns().add(campaign);
@@ -62,16 +69,25 @@ public class ProductServiceImpl implements  ProductService{
     }
 
     @Override
+    public Collection<Product> getProductsEntity() {
+        Collection<Product>  products = productRepository.getProductsByDeleteStatus().orElseThrow(
+                () -> new BusinessServiceOperationException.ProductNotFoundException("Products not found")
+        );
+        log.info("Getting products was successfully");
+        return products;
+    }
+
+    @Override
     public void delete(Long id, boolean hardDelete) throws BaseException {
-    Product product =  getProduct(id);
+    Product product =  getProductEntityWithId(id);
+    if(hardDelete){
+            productRepository.delete(product);
+            log.info("Hard delete product was successfully -> {}",product.getId());
+            return;
+    }
     if(product.isDeleted()){
         log.info("Product -> {} already deleted",product.getId());
         throw new BusinessServiceOperationException.ProductAlreadyDeletedException("Product already deleted");
-
-    }
-    if(hardDelete){
-        productRepository.delete(product);
-        log.info("Hard delete product was successfully -> {}",product.getId());
     }
     product.setDeleted(true);
     productRepository.save(product);

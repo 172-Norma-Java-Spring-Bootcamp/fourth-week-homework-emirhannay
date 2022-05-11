@@ -1,6 +1,8 @@
 package org.patikadev.orderexample.converter;
 
 import org.patikadev.orderexample.dto.request.CreateSellerRequestDTO;
+import org.patikadev.orderexample.dto.request.SellerAddressDTO;
+import org.patikadev.orderexample.dto.response.GetSellersResponseDTO;
 import org.patikadev.orderexample.model.Seller;
 import org.patikadev.orderexample.model.SellerAddress;
 import org.springframework.stereotype.Component;
@@ -29,5 +31,11 @@ public class SellerConverterImpl implements SellerConverter{
 
         seller.setSellerAddress(sellerAddress);
         return seller;
+    }
+    public GetSellersResponseDTO toGetSellersResponse(Seller seller){
+        return new GetSellersResponseDTO(seller.getId(), seller.getName(), seller.getUsername(), seller.getEmail(), toSellerAddressDTO(seller.getSellerAddress()));
+    }
+    public SellerAddressDTO toSellerAddressDTO(SellerAddress sellerAddress){
+        return new SellerAddressDTO(sellerAddress.getPhoneNumber(), sellerAddress.getCountry(), sellerAddress.getCity(), sellerAddress.getPostalCode(), sellerAddress.getDescription());
     }
 }

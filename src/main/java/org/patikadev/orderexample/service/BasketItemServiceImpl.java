@@ -17,7 +17,6 @@ import java.util.Set;
 @Component
 public class BasketItemServiceImpl implements BasketItemService{
 
-    private final ProductService productService;
     private final BasketItemRepository basketItemRepository;
 
     public BigDecimal calculateBasketItemPrice(BasketItem basketItem){

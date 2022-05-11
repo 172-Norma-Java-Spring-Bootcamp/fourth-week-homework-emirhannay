@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -23,4 +24,5 @@ public class Order extends BaseExtendedModel{
             @OneToOne(cascade = CascadeType.ALL, mappedBy = "order")
             private OrderAddress orderAddress;
             private Date orderTime;
+            private UUID orderNo;
 }

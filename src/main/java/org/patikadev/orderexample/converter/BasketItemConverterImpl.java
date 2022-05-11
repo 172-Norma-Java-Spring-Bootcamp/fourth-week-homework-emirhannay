@@ -3,6 +3,7 @@ package org.patikadev.orderexample.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.patikadev.orderexample.dto.request.AddBasketItemDTO;
+import org.patikadev.orderexample.dto.response.GetBasketItemResponseDTO;
 import org.patikadev.orderexample.exception.BusinessServiceOperationException;
 import org.patikadev.orderexample.model.BasketItem;
 import org.patikadev.orderexample.model.Product;
@@ -32,5 +33,13 @@ public class BasketItemConverterImpl implements BasketItemConverter {
 
 
         return basketItem;
+    }
+    public GetBasketItemResponseDTO getBasketItemResponseDTO(BasketItem basketItem){
+        return new GetBasketItemResponseDTO(basketItem.getProduct().getName(),
+                basketItem.getQuantity(),
+                basketItem.getPrice(),
+                basketItem.getDiscountPrice(),
+                basketItem.getTaxPrice(),
+                basketItem.getShippingPrice());
     }
 }

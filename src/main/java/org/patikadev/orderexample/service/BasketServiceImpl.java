@@ -139,7 +139,7 @@ public class BasketServiceImpl implements BasketService{
             //Check baskets one by one to see if they have an order
             for(int i = 0; i < basketList.size(); i++){
                 Basket tempBasket = basketList.get(i);
-                Order order = orderService.getOrderByBasketId(tempBasket.getId());
+                Order order = orderService.getOrderEntityByBasketId(tempBasket.getId());
                 //Return this if you find the basket with no order
                 if(Objects.isNull(order)){
                     log.info("The customer's -> active basket was found.",customerId);

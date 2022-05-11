@@ -16,7 +16,7 @@ import java.util.Collection;
 public class CustomerController {
 
     private final Validator<CreateCustomerRequestDTO> createCustomerValidator;
-    private final Validator<Long> customerIdValidator;
+    private final Validator<Long> idValidator;
     private final CustomerService customerService;
 
 
@@ -35,14 +35,14 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CreateCustomerRequestDTO> getCustomer(@PathVariable Long id) {
-        customerIdValidator.validate(id);
+        idValidator.validate(id);
         return ResponseEntity.ok(customerService.getCustomerDto(id));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable Long id,
                                     @RequestParam(name = "hardDelete", required = false) boolean hardDelete) {
-        customerIdValidator.validate(id);
+        idValidator.validate(id);
         customerService.delete(id,hardDelete);
         return ResponseEntity.ok().build();
     }

@@ -2,12 +2,17 @@ package org.patikadev.orderexample.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.patikadev.orderexample.dto.request.CreateOrderRequestDTO;
+import org.patikadev.orderexample.dto.request.OrderAddressDTO;
+import org.patikadev.orderexample.dto.response.GetBasketItemResponseDTO;
+import org.patikadev.orderexample.dto.response.GetOrdersResponseDTO;
 import org.patikadev.orderexample.model.*;
 import org.patikadev.orderexample.service.BasketService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Component
@@ -15,6 +20,7 @@ public class OrderConverterImpl implements OrderConverter {
 
     @Lazy
     private final BasketService basketService;
+    private final BasketItemConverter basketItemConverter;
 
 
     @Override
@@ -42,8 +48,22 @@ public class OrderConverterImpl implements OrderConverter {
         order.setCreatedAt(new Date());
         order.setCreatedBy(customer.getName());
         order.setOrderTime(new Date());
-
+        order.setOrderNo(UUID.randomUUID());
 
         return order;
+    }
+    public GetOrdersResponseDTO toGetOrdersResponseDTO(Order order) {
+        Collection<GetBasketItemResponseDTO> basketItemList = order.getBasket().getItems().stream()
+                .map(basketItemConverter::getBasketItemResponseDTO).toList();
+        return new GetOrdersResponseDTO(order.getOrderNo(),order.getOrderStatus(),toOrderAddressDTO(order.getOrderAddress()),
+                order.getOrderTime(),order.getPrice(),basketItemList);
+    }
+    public OrderAddressDTO toOrderAddressDTO(OrderAddress orderAddress){
+        return new OrderAddressDTO(
+                orderAddress.getPhoneNumber(),
+                orderAddress.getCountry(),
+                orderAddress.getCity(),
+                orderAddress.getPostalCode(),
+                orderAddress.getDescription());
     }
 }

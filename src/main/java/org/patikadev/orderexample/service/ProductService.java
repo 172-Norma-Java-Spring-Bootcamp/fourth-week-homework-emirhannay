@@ -11,7 +11,9 @@ import java.util.Collection;
 public interface ProductService {
     void create(CreateProductRequestDTO createProductRequestDTO);
     Collection<GetProductsResponseDTO> getProducts();
-    Product getProduct(Long id) throws BaseException;
+    Collection<Product> getProductsEntity();
+    Product getProductEntityWithId(Long id) throws BaseException;
+    GetProductsResponseDTO getProductWithId(Long id);
     void defineProductToCampaign(DefineProductToCampaignRequestDTO defineProductToCampaingRequestDTO);
     void delete(Long id, boolean hardDelete) throws BaseException;
 }

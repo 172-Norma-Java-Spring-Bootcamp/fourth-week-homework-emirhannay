@@ -13,13 +13,13 @@ public class BasketController {
 
     private final BasketService basketService;
 
-    @PostMapping("addItem")
+    @PostMapping("/items")
     public ResponseEntity<?> addBasketItemToBasket(@RequestBody AddBasketItemDTO addBasketItemDTO) {
             basketService.addBasketItemToBasket(addBasketItemDTO);
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("basketItems/delete/{basketItemId}")
+    @DeleteMapping("/items/{basketItemId}")
     public ResponseEntity<?> deleteBasketItemToBasket(@PathVariable Long basketItemId){
         basketService.deleteBasketItemToBasket(basketItemId);
         return ResponseEntity.ok().build();

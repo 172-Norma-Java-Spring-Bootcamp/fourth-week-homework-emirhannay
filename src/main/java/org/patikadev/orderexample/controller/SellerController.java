@@ -2,15 +2,14 @@ package org.patikadev.orderexample.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.patikadev.orderexample.dto.request.CreateSellerRequestDTO;
+import org.patikadev.orderexample.dto.response.GetSellersResponseDTO;
 import org.patikadev.orderexample.service.SellerService;
-import org.patikadev.orderexample.validator.CreateSellerRequestValidator;
+import org.patikadev.orderexample.validator.Validator;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 @RestController
@@ -18,7 +17,8 @@ import javax.validation.Valid;
 public class SellerController {
 
     private final SellerService sellerService;
-    private final CreateSellerRequestValidator createSellerRequestValidator;
+    private final Validator<CreateSellerRequestDTO> createSellerRequestValidator;
+    private final Validator<Long> idValidator;
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid CreateSellerRequestDTO createSellerRequestDTO){
@@ -26,4 +26,25 @@ public class SellerController {
             sellerService.create(createSellerRequestDTO);
             return ResponseEntity.ok().build();
     }
+
+    @GetMapping
+    public ResponseEntity<Collection<GetSellersResponseDTO>> getSellers(){
+        return ResponseEntity.ok(sellerService.getSellers());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable Long id,
+                                    @RequestParam(name = "hardDelete", required = false) boolean hardDelete){
+        idValidator.validate(id);
+        sellerService.delete(id,hardDelete);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<GetSellersResponseDTO> getSeller(@PathVariable Long id){
+        idValidator.validate(id);
+        return ResponseEntity.ok(sellerService.getSellerDtoWithId(id));
+    }
+
+
 }

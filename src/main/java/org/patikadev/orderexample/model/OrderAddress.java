@@ -1,5 +1,6 @@
 package org.patikadev.orderexample.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,5 +19,6 @@ public class OrderAddress extends BaseModel {
     private String description;
 
     @OneToOne
+    @JsonIgnore
     private Order order;
 }
